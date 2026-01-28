@@ -27,9 +27,9 @@ inputs:
     default: ''
   
   python-version:
-    description: 'Python version to use'
+    description: 'Python version to use (trusys-llm-scan requires 3.11+)'
     required: false
-    default: '3.9'
+    default: '3.11'
   
   format:
     description: 'Output format (console, json, sarif)'
@@ -224,7 +224,7 @@ runs:
     
     - name: Upload SARIF results
       if: inputs.format == 'sarif' && always()
-      uses: github/codeql-action/upload-sarif@v3
+      uses: github/codeql-action/upload-sarif@v4
       with:
         sarif_file: ${{ steps.scan.outputs.sarif-path || 'llm-scan-results.sarif' }}
       continue-on-error: true

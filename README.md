@@ -49,7 +49,7 @@ That’s it. Every push and pull request will run the scanner. By default it:
 
 - Scans the whole repository (`.`)
 - Outputs in **SARIF** and uploads to GitHub so findings appear under **Security → Code scanning**
-- Uses Python 3.9
+- Uses Python 3.11 (required by trusys-llm-scan; override with `python-version` if needed)
 
 **Where do I see results?**  
 With the default `format: 'sarif'`, the action uploads results to GitHub. Open your repo on GitHub → **Security** → **Code scanning** to see the findings. You can also read the job log for the full scan output.
@@ -169,7 +169,7 @@ All inputs are optional. Omit any you don’t need.
 | `severity` | Filter findings by severity (critical, high, medium, low, info) | No | `` |
 | `exclude` | Comma-separated list of patterns to exclude | No | `` |
 | `include` | Comma-separated list of patterns to include | No | `` |
-| `python-version` | Python version to use | No | `3.9` |
+| `python-version` | Python version to use (3.11+ required by scanner) | No | `3.11` |
 | `format` | Output format (console, json, sarif) | No | `sarif` |
 | `output` | Output file path | No | `` |
 | `enable-ai-filter` | Enable AI-powered false positive filtering | No | `false` |
@@ -259,7 +259,7 @@ All inputs are optional. Omit any you don’t need.
 
 ## Requirements
 
-- **In your repo:** Nothing. The action installs Python (3.9 by default, overridable via `python-version`) and the scanner (`trusys-llm-scan`) from PyPI.
+- **In your repo:** Nothing. The action installs Python (3.11 by default; trusys-llm-scan requires 3.11+) and the scanner (`trusys-llm-scan`) from PyPI.
 - **GitHub:** A repository with Actions enabled; add the workflow file under `.github/workflows/`.
 
 ## Troubleshooting
