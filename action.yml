@@ -85,6 +85,11 @@ inputs:
     description: 'API key for backend upload (use secrets for security)'
     required: false
     default: ''
+  
+  no-fail-on-findings:
+    description: 'Always exit 0 even when findings exist (job succeeds; useful for report-only)'
+    required: false
+    default: 'false'
 
 outputs:
   scan-findings:
@@ -201,6 +206,11 @@ runs:
           CMD="$CMD --upload ${{ inputs.upload-endpoint }}"
           CMD="$CMD --application-id ${{ inputs.application-id }}"
           CMD="$CMD --api-key ${{ inputs.api-key }}"
+        fi
+        
+        # Exit 0 even when findings exist (report-only; no "Process completed with exit code 1")
+        if [ "${{ inputs.no-fail-on-findings }}" = "true" ]; then
+          CMD="$CMD --no-fail-on-findings"
         fi
         
         echo "Running: $CMD"
