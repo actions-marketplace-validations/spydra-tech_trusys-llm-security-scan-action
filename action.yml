@@ -90,6 +90,11 @@ inputs:
     description: 'Always exit 0 even when findings exist (job succeeds; useful for report-only)'
     required: false
     default: 'false'
+  
+  upload-sarif-to-github:
+    description: 'Upload SARIF to GitHub Code Scanning inside the action (set false to upload in your workflow instead for full logs)'
+    required: false
+    default: 'true'
 
 outputs:
   scan-findings:
@@ -241,7 +246,7 @@ runs:
         fi
     
     - name: Upload SARIF results
-      if: inputs.format == 'sarif' && always()
+      if: inputs.format == 'sarif' && inputs.upload-sarif-to-github == 'true' && always()
       uses: github/codeql-action/upload-sarif@v4
       with:
         sarif_file: ${{ steps.scan.outputs.sarif-path || 'llm-scan-results.sarif' }}
